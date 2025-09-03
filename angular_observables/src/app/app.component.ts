@@ -33,16 +33,28 @@ export class AppComponent {
     //Observer-event listener
     //subscribe method takes three optional callback functions
     // - next,error,complete
-    this.myObservable.subscribe((val:any)=>{
-      this.data.push(val);
+  //   this.myObservable.subscribe((val:any)=>{
+  //     this.data.push(val);
+  //   },
+  //   // handling error event
+  //   (err)=>{
+  //     alert(err.message);
+  //   },
+  //   ()=>{
+  //     alert('All data is streamed');
+  //   }
+  // );
+
+  this.myObservable.subscribe({
+    next:(val:any)=>
+      {this.data.push(val)}
+    ,
+    error(err){
+      alert(err.message)
     },
-    // handling error event
-    (err)=>{
-      alert(err.message);
-    },
-    ()=>{
-      alert('All data is streamed');
+    complete(){
+      alert('Allthe data  is streamed!')
     }
-  );
+  })
   }
 }
