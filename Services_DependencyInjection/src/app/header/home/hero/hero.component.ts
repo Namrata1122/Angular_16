@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SubscribeService } from 'src/app/Services/subscribe.service';
 
 @Component({
@@ -9,7 +9,9 @@ import { SubscribeService } from 'src/app/Services/subscribe.service';
 })
 export class HeroComponent {
 
-  constructor(private subService :SubscribeService){}
+  // constructor(private subService :SubscribeService){}
+
+  subService= inject(SubscribeService); //inject method was introduced in angular 14
 
   OnSubscribe(){
     // // tight-coupling
