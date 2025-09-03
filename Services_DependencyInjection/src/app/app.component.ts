@@ -6,7 +6,7 @@ import { SubscribeService } from './Services/subscribe.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   // providing service inside root component
-  providers:[SubscribeService]
+  // providers:[SubscribeService]
 })
 export class AppComponent {
   
