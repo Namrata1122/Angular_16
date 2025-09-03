@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { from, fromEvent, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit{
   title = 'angular_observables';
 
   data: any[]=[];
+
+  @ViewChild('createbtn')//passing template reference variable here
+  createBtn:ElementRef;
+
+  // property to store the observable
+  createBtnObs;
 
   array1 = [1,3,5,7,9];
   array2 = ['A','B','C','D'];
@@ -70,5 +76,26 @@ export class AppComponent {
       alert('All the data  is streamed!')
     }
   })
+  }
+
+  buttonClicked(){
+    let count = 0;
+    // creating an observable from click event
+    this.createBtnObs = fromEvent(this.createBtn.nativeElement,'click')
+                        .subscribe((data)=>{
+                          console.log(data);
+                          this.showItem(count++);
+                        });
+  }
+
+  ngAfterViewInit(){
+    this.buttonClicked();
+  }
+
+  showItem(val){
+    let div = document.createElement('div');
+    div.innerText = 'Item' + val;
+    div.className ='data-list';
+    document.getElementById('container').appendChild(div);
   }
 }
