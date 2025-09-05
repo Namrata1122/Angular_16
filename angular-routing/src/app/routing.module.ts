@@ -11,6 +11,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { PopularComponent } from './home/popular/popular.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { LoginComponent } from "./login/login.component";
+import { CheckoutComponent } from "./checkout/checkout.component";
+import { AuthGaurdService } from "./services/authgaurd.service";
 
  //DEFINE ROUTES
  const routes:Routes = [
@@ -23,7 +25,8 @@ import { LoginComponent } from "./login/login.component";
     // {path:'courses/course/:id',component:CourseDetailComponent},
     {path:'courses',children:[
       {path:'course/:id',component:CourseDetailComponent},
-      {path:'popular',component:PopularComponent}
+      {path:'popular',component:PopularComponent},
+      {path:'checkout',component:CheckoutComponent,canActivate:[AuthGaurdService]}
     ]},
     {path:'login',component:LoginComponent},
     {path:'**',component:NotFoundComponent},
