@@ -1,0 +1,11 @@
+<div class="selectedCourse">
+    <h1>{{selectedCourse.title}}</h1>
+</div>
+<div class="course-info">
+    
+</div>
+
+<div class="prev-next-course">
+    <button class="prev-btn" [routerLink]="['/courses/course/',selectedCourse.id-1]">Previous course</button>
+    <button class="next-btn" [routerLink]="['/courses/course/',selectedCourse.id+1]">Next Course</button>
+</div>

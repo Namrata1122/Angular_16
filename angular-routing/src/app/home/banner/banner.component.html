@@ -1,0 +1,19 @@
+<div class="home-page-banner">
+    <div class="home-page-banner-slogan">
+        <h1>Learn coding in easy step by step way.excel in your career.</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Sint reiciendis repudiandae ipsam, error inventore eius 
+            voluptatum accusamus maxime molestiae soluta. Cumque ullam
+             necessitatibus, quaerat atque, nam deserunt quibusdam
+              dicta cum delectus necessitatibus nemo rerum saepe, quis 
+              eius maiores. Eius autem quidem id repellendus sed voluptatem 
+              harum, eaque nisi et voluptates velit eos consequatur earum,
+               dolor natus sunt.
+        </p>
+        <div class="home-page-banner-search">
+            <input type="text" class="search-input" placeholder="Search Courses" #searchVar>
+            <!-- <button class="search-button" [routerLink]="'/courses'" [queryParams]="{search:searchVar.value}">Search Courses</button> -->
+            <button class="search-button" [routerLink]="'/courses'" (click)="OnSearchClicked(searchVar.value)">Search Courses</button>
+        </div>
+    </div>
+</div>
