@@ -1,14 +1,24 @@
 import { inject, Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanActivateChildFn, CanDeactivate, CanDeactivateFn, Resolve, ResolveFn, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
+import { ContactComponent } from "../contact/contact.component";
+import { Course } from "../models/course";
+import { CourseService } from "./course.service";
+
+
+export interface IDeactivateComponent{
+    //exposing canExit() method
+    canExit:()=> boolean|Observable<boolean> |Promise<boolean>;
+}
 
 @Injectable({
     providedIn:'root'
 })
-export class AuthGaurdService implements CanActivate{
+export class AuthGaurdService implements CanActivate,CanActivateChild,CanDeactivate<IDeactivateComponent>, Resolve<Course[]>{
     authService:AuthService = inject(AuthService)
     router:Router = inject(Router);
+    courseService :CourseService = inject(CourseService);
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -19,5 +29,18 @@ export class AuthGaurdService implements CanActivate{
             this.router.navigate(['/login'])
             return false;
         }
+    }
+
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        return this.canActivate(childRoute,state);
+    }
+
+    canDeactivate(component: IDeactivateComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState: RouterStateSnapshot)
+    {
+        return component.canExit();
+    }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Course[] | Observable<Course[]> | Promise<Course[]> {
+        return this.courseService.getAllcourses()
     }
 }

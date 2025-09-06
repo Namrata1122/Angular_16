@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'app-checkout',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent {
+  activeRoute:ActivatedRoute = inject(ActivatedRoute);
+  router:Router = inject(Router);
+  course;
+  ngOnInit(){
+    // this.activeRoute.data.subscribe((data)=>{
+    //   this.course = data;
+    // })
 
+    // DYNAMIC DATA
+    // this.course = this.router.getCurrentNavigation().extras.state;
+    this.course = history.state;
+  }
 }

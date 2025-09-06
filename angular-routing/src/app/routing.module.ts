@@ -13,6 +13,8 @@ import { CourseDetailComponent } from './courses/course-detail/course-detail.com
 import { LoginComponent } from "./login/login.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { AuthGaurdService } from "./services/authgaurd.service";
+import { canActivate,canActivateChild, resolve } from "./auth.guards";
+
 
  //DEFINE ROUTES
  const routes:Routes = [
@@ -20,13 +22,19 @@ import { AuthGaurdService } from "./services/authgaurd.service";
     // {path:'',redirectTo:'Home',pathMatch:'full'},
     {path:'home',component:HomeComponent},
     {path:'about',component:AboutComponent},
-    {path:'contact',component:ContactComponent},
-    {path:'courses',component:CoursesComponent},
+    {path:'contact',component:ContactComponent, canDeactivate:[(comp:ContactComponent)=>{return comp.canExit();}]},
+    // {path:'courses',component:CoursesComponent, resolve:{courses:AuthGaurdService}},
+    {path:'courses',component:CoursesComponent, resolve:{courses:resolve}},
     // {path:'courses/course/:id',component:CourseDetailComponent},
-    {path:'courses',children:[
+    // {path:'courses',canActivateChild:[AuthGaurdService],children:[
+    {path:'courses',canActivateChild:[canActivateChild],children:[
       {path:'course/:id',component:CourseDetailComponent},
       {path:'popular',component:PopularComponent},
-      {path:'checkout',component:CheckoutComponent,canActivate:[AuthGaurdService]}
+      // {path:'checkout',component:CheckoutComponent,canActivate:[AuthGaurdService]}
+      // {path:'checkout',component:CheckoutComponent,canActivate:[canActivate]}
+      // passing static or dynamic data to routes
+      // {path:'checkout',component:CheckoutComponent, data:{name:'Test Course', price:399}},
+      {path:'checkout',component:CheckoutComponent, data:{name:'Test Course', price:399}},
     ]},
     {path:'login',component:LoginComponent},
     {path:'**',component:NotFoundComponent},
@@ -34,7 +42,8 @@ import { AuthGaurdService } from "./services/authgaurd.service";
 
 @NgModule({
     imports:[
-        RouterModule.forRoot(routes)
+      // enableTracing logs  all the navigation events triggered when going from one route to another into the developer's console.
+        RouterModule.forRoot(routes, {enableTracing:true})
     ],
     exports:[
         RouterModule

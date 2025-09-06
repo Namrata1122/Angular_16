@@ -20,6 +20,7 @@ import { TestimonyComponent } from './home/testimony/testimony.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { CourseService } from './services/course.service';
 import { RoutingModule } from './routing.module';
+import { FormsModule } from '@angular/forms';
 
 // //DEFINE ROUTES
 // const routes:Routes = [
@@ -58,7 +59,8 @@ import { RoutingModule } from './routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RoutingModule
+    RoutingModule,
+    FormsModule
     // RouterModule.forRoot(routes)
   ],
   providers: [CourseService],
